@@ -1,6 +1,6 @@
 package team.hackerping.nanuri.user.presentation;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,16 +10,12 @@ import team.hackerping.nanuri.user.application.UserService;
 import team.hackerping.nanuri.user.presentation.dto.UserResponse.MaskedUserInfo;
 import team.hackerping.nanuri.user.presentation.dto.UserResponse.UserInfo;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/users")
 public class UserRestController implements UserController{
 
     private final UserService userService;
-
-    @Autowired
-    public UserRestController(UserService userService) {
-        this.userService = userService;
-    }
 
     @Override
     @GetMapping("/me")
