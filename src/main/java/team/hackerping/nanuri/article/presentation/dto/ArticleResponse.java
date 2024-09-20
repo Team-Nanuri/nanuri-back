@@ -35,13 +35,13 @@ public class ArticleResponse {
             LocalDate rentalStartDate,
             LocalDate rentalEndDate,
             Boolean liked,
-            UserResponse.MaskedUserInfo writer
+            UserResponse.MaskedUserDto writer
     ){ }
 
     public record Simple(
             Long articleId,
             String title,
             String imageUrl,
-            UserResponse.MaskedUserInfo writer
+            UserResponse.MaskedUserDto writer
     ) { }
 }

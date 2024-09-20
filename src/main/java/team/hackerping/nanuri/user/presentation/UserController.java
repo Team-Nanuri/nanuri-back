@@ -16,7 +16,7 @@ public interface UserController {
                     @ApiResponse(responseCode = "200", description = "성공")
             }
     )
-    ResponseEntity<UserResponse.UserInfo> getMyInfo();
+    ResponseEntity<UserResponse.UserDto> getMyInfo();
 
     @Operation(summary = "상대 정보 조회")
     @ApiResponses(
@@ -24,5 +24,5 @@ public interface UserController {
                     @ApiResponse(responseCode = "200", description = "성공")
             }
     )
-    ResponseEntity<UserResponse.MaskedUserInfo> getOtherInfo(@PathVariable Long id);
+    ResponseEntity<UserResponse.MaskedUserDto> getOtherInfo(@PathVariable Long id);
 }

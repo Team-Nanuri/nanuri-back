@@ -20,8 +20,4 @@ public class User {
     @NotNull
     @Enumerated(EnumType.STRING)
     private UserType userType;
-
-    public String getMaskedUsername() {
-        return username.substring(0, 2) + "*".repeat(Math.max(0, username.length() - 2));
-    }
 }
