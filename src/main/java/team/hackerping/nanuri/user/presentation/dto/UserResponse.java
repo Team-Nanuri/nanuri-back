@@ -1,6 +1,6 @@
 package team.hackerping.nanuri.user.presentation.dto;
 
-import team.hackerping.nanuri.user.domain.UserInfo;
+import team.hackerping.nanuri.user.application.UserInfo;
 import team.hackerping.nanuri.user.domain.UserType;
 
 public class UserResponse {

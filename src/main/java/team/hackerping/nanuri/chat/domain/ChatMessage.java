@@ -2,10 +2,13 @@ package team.hackerping.nanuri.chat.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import team.hackerping.nanuri.user.domain.User;
 
 import java.time.LocalDateTime;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class ChatMessage {
 
@@ -25,6 +28,7 @@ public class ChatMessage {
 
     @NotNull
     private String content;
+
     @NotNull
     private LocalDateTime createdAt;
 }
