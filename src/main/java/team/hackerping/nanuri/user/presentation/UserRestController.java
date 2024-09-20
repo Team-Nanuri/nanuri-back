@@ -24,14 +24,20 @@ public class UserRestController implements UserController{
     @Override
     @GetMapping("/me")
     public ResponseEntity<UserInfo> getMyInfo() {
-        // TODO
-        return null;
+        // AccessToken에서 값을 가져오는 것으로 수정
+        Long userId = 1L;
+
+        UserInfo info = userService.getUserInfo(userId);
+
+        return ResponseEntity.ok(info);
     }
 
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<MaskedUserInfo> getOtherInfo(@PathVariable Long id) {
-        // TODO
-        return null;
+
+        MaskedUserInfo info = userService.getOtherUserInfo(id);
+
+        return ResponseEntity.ok(info);
     }
 }
