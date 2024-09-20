@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "MEMBER")
-@Getter
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +18,10 @@ public class User {
 
     @NotNull
     private String username;
+
     @NotNull
     private String encodedPassword;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private UserType userType;

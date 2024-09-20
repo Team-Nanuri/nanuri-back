@@ -19,8 +19,10 @@ public class Article {
 
     @NotNull
     private String title;
+
     @NotNull
     private String content;
+
     @NotNull
     private LocalDateTime createdAt;
 
@@ -31,7 +33,9 @@ public class Article {
     @NotNull
     @Enumerated(EnumType.STRING)
     private ShareType shareType;
+
     private LocalDate rentalStartDate;
+
     private LocalDate rentalEndDate;
 
     @NotNull

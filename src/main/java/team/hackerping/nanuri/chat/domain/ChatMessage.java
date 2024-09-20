@@ -28,6 +28,7 @@ public class ChatMessage {
 
     @NotNull
     private String content;
+
     @NotNull
     private LocalDateTime createdAt;
 }
