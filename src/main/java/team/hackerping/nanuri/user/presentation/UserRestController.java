@@ -1,16 +1,25 @@
 package team.hackerping.nanuri.user.presentation;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import team.hackerping.nanuri.user.application.UserService;
 import team.hackerping.nanuri.user.presentation.dto.UserResponse.MaskedUserInfo;
 import team.hackerping.nanuri.user.presentation.dto.UserResponse.UserInfo;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserRestController implements UserController{
+
+    private final UserService userService;
+
+    @Autowired
+    public UserRestController(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     @GetMapping("/me")
