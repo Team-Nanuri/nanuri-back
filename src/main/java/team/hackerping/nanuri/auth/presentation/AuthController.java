@@ -17,5 +17,5 @@ public interface AuthController {
                     @ApiResponse(responseCode = "400", description = "회원가입 실패")
             }
     )
-    void signup(@ModelAttribute AuthRequest request);
+    void signup(@ModelAttribute AuthRequest.Signup request);
 }
