@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.hackerping.nanuri.global.exception.NanuriException;
 import team.hackerping.nanuri.global.exception.code.GeneralError;
-import team.hackerping.nanuri.user.domain.UserInfo;
 import team.hackerping.nanuri.user.domain.User;
 import team.hackerping.nanuri.user.persistence.UserRepository;
 

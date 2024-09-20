@@ -1,8 +1,10 @@
-package team.hackerping.nanuri.user.domain;
+package team.hackerping.nanuri.user.application;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import team.hackerping.nanuri.user.domain.User;
+import team.hackerping.nanuri.user.domain.UserType;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
