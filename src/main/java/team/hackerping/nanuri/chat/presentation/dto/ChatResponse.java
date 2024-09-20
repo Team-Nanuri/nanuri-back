@@ -17,7 +17,7 @@ public class ChatResponse {
             Long roomId,
             ArticleResponse.Simple article,
             ChatMessage lastMessage,
-            UserResponse.MaskedUserInfo otherUser
+            UserResponse.MaskedUserDto otherUser
     ) { }
 
     public record RoomDetail(
