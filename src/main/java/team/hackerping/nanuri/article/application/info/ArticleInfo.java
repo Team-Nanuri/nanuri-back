@@ -60,7 +60,7 @@ public class ArticleInfo {
                     article.getRentalEndDate(),
                     article.getStatus(),
                     UserInfo.from(article.getWriter()),
-                    article.getImage().getUrls(),
+                    article.getImages(),
                     liked
             );
         }
