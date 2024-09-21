@@ -38,6 +38,10 @@ public class Article {
 
     private LocalDate rentalEndDate;
 
+    @Column(name = "IMAGE_URLS")
+    @Convert(converter = ArticleImage.ArticleImageConverter.class)
+    private ArticleImage image;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private ArticleStatus status = ArticleStatus.ONGOING;
