@@ -6,9 +6,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity
 @Table(name = "MEMBER")
 public class User {
 
@@ -25,4 +25,25 @@ public class User {
     @NotNull
     @Enumerated(EnumType.STRING)
     private UserType userType;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private UserStatus userStatus;
+
+    private String profileImageUrl;
+
+    private User(String username, String encodedPassword, UserType userType) {
+        this.username = username;
+        this.encodedPassword = encodedPassword;
+        this.userType = userType;
+        this.userStatus = UserStatus.BLOCKED;
+    }
+
+    public static User of(String username, String encodedPassword, UserType userType) {
+        return new User(username, encodedPassword, userType);
+    }
+
+    public void uploadProfileImage(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
 }
