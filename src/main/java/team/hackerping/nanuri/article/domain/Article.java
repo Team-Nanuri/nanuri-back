@@ -42,6 +42,7 @@ public class Article {
     @Convert(converter = ArticleImage.ArticleImageConverter.class)
     private ArticleImage image;
 
+    @Builder.Default
     @NotNull
     @Enumerated(EnumType.STRING)
     private ArticleStatus status = ArticleStatus.ONGOING;
@@ -50,4 +51,11 @@ public class Article {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "WRITER_ID")
     private User writer;
+
+    public String getFirstImageUrl() {
+        if (image == null)
+            return null;
+
+        return image.getUrls().get(0);
+    }
 }
