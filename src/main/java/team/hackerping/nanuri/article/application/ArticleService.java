@@ -19,7 +19,7 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
 
-    public ArticleInfo.Detail registerArticle(RegisterArticleCommand command) {
+    public Article registerArticle(RegisterArticleCommand command) {
 
         User user = userRepository.findById(command.getWriterId())
                 .orElseThrow(() -> new NanuriException(GeneralError.NOT_FOUND, "사용자"));
@@ -41,6 +41,6 @@ public class ArticleService {
 
         articleRepository.save(article);
 
-        return ArticleInfo.Detail.of(article, false);
+        return article;
     }
 }
