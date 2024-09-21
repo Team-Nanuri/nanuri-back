@@ -1,6 +1,13 @@
 package team.hackerping.nanuri.user.domain;
 
-public enum UserStatus {
+import org.springframework.security.core.GrantedAuthority;
+
+public enum UserStatus implements GrantedAuthority {
     BLOCKED,
-    ACTIVE
+    ACTIVE;
+
+    @Override
+    public String getAuthority() {
+        return this.name();
+    }
 }
