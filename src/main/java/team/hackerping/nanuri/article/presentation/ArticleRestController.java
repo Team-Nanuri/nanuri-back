@@ -17,7 +17,7 @@ import team.hackerping.nanuri.article.presentation.dto.ArticleRequest.Upsert;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/article")
+@RequestMapping("/api/articles")
 public class ArticleRestController implements ArticleController{
 
     private final ArticleFacade articleFacade;
