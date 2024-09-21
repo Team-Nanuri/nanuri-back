@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import team.hackerping.nanuri.article.presentation.dto.ArticleResponse;
 import team.hackerping.nanuri.article.presentation.dto.ArticlePagingParams;
 import team.hackerping.nanuri.article.presentation.dto.ArticleRequest;
@@ -41,9 +41,7 @@ public interface ArticleController {
                     @ApiResponse(responseCode = "201", description = "게시글 작성 성공"),
             }
     )
-    ResponseEntity<ArticleResponse.Detail> createArticle(
-            @RequestBody(description = "게시글 작성 정보") ArticleRequest.Upsert request
-    );
+    ResponseEntity<ArticleResponse.Detail> createArticle(@ModelAttribute ArticleRequest.Upsert request);
 
     @Operation(summary = "게시글 수정")
     @ApiResponses(
