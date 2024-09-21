@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import team.hackerping.nanuri.article.application.ArticleInfo;
+import team.hackerping.nanuri.article.application.ArticleFacade;
 import team.hackerping.nanuri.article.application.info.ArticleInfo;
 import team.hackerping.nanuri.article.presentation.dto.ArticleResponse;
 import team.hackerping.nanuri.article.presentation.dto.ArticlePagingParams;
@@ -19,7 +19,7 @@ import team.hackerping.nanuri.article.presentation.dto.ArticleRequest.Upsert;
 @RequestMapping("/api/article")
 public class ArticleRestController implements ArticleController{
 
-    private final ArticleService articleService;
+    private final ArticleFacade articleFacade;
 
     @Override
     @GetMapping()
@@ -42,7 +42,7 @@ public class ArticleRestController implements ArticleController{
         // TODO: user id를 access token에서 추출한 정보로 수정
         Long userId = 1L;
 
-        ArticleInfo.Detail info = articleService.registerArticle(request.toCommand(userId));
+        ArticleInfo.Detail info = articleFacade.registerArticle(request.toCommand(userId));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(ArticleResponse.Detail.from(info));
     }
