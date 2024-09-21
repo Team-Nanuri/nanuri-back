@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import team.hackerping.nanuri.article.application.ArticleInfo;
+import team.hackerping.nanuri.article.application.info.ArticleInfo;
 import team.hackerping.nanuri.article.domain.ArticleStatus;
 import team.hackerping.nanuri.article.domain.ItemCategory;
 import team.hackerping.nanuri.article.domain.ShareType;

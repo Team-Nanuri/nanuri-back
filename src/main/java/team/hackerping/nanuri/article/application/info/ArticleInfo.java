@@ -1,4 +1,4 @@
-package team.hackerping.nanuri.article.application;
+package team.hackerping.nanuri.article.application.info;
 
 import team.hackerping.nanuri.article.domain.Article;
 import team.hackerping.nanuri.article.domain.ArticleStatus;

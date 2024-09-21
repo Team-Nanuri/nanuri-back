@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import team.hackerping.nanuri.article.application.ArticleInfo;
-import team.hackerping.nanuri.article.application.ArticleService;
+import team.hackerping.nanuri.article.application.info.ArticleInfo;
 import team.hackerping.nanuri.article.presentation.dto.ArticleResponse;
 import team.hackerping.nanuri.article.presentation.dto.ArticlePagingParams;
 import team.hackerping.nanuri.article.presentation.dto.ArticleRequest.Status;

@@ -2,6 +2,7 @@ package team.hackerping.nanuri.article.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import team.hackerping.nanuri.article.application.command.RegisterArticleCommand;
 import team.hackerping.nanuri.article.domain.Article;
 import team.hackerping.nanuri.article.domain.ArticleImage;
 import team.hackerping.nanuri.article.persistence.ArticleRepository;
