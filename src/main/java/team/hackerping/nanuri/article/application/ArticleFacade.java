@@ -28,4 +28,12 @@ public class ArticleFacade {
 
         return ArticleInfo.Detail.of(article, isLike);
     }
+
+    @Transactional(readOnly = true)
+    public ArticleInfo.Detail searchArticle(Long userId, Long articleId) {
+        Article article = articleService.searchArticle(articleId);
+        Boolean isLike = likeService.searchLike(userId, articleId);
+
+        return ArticleInfo.Detail.of(article, isLike);
+    }
 }
