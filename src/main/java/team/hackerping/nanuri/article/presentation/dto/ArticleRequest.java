@@ -3,6 +3,7 @@ package team.hackerping.nanuri.article.presentation.dto;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
+import team.hackerping.nanuri.article.application.RegisterArticleCommand;
 import team.hackerping.nanuri.article.domain.ArticleStatus;
 import team.hackerping.nanuri.article.domain.ItemCategory;
 import team.hackerping.nanuri.article.domain.ShareType;
@@ -16,7 +17,20 @@ public class ArticleRequest {
             String title,
             String content,
             List<MultipartFile> images
-    ) { }
+    ) {
+        public RegisterArticleCommand toCommand(Long writerId) {
+            return new RegisterArticleCommand(
+                    writerId,
+                    category,
+                    shareType,
+                    rentalStartDate,
+                    rentalEndDate,
+                    title,
+                    content,
+                    images
+            );
+        }
+    }
 
     public record Status(
             ArticleStatus status
