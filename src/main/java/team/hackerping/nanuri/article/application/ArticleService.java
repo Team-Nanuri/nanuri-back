@@ -68,4 +68,10 @@ public class ArticleService {
     public Page<Article> searchArticles(PagingArticleCommand command) {
         return articleJpaQueryRepository.pagingByCriteria(command);
     }
+
+    public void deleteArticle(Long userId, Long articleId) {
+        // TODO: 권한 검사
+
+        articleRepository.deleteById(articleId);
+    }
 }

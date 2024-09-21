@@ -50,4 +50,8 @@ public class ArticleFacade {
 
         return ArticleInfo.Paging.of(articlePage, pairs);
     }
+
+    public void deleteArticle(Long userId, Long articleId) {
+        articleService.deleteArticle(userId, articleId);
+    }
 }
