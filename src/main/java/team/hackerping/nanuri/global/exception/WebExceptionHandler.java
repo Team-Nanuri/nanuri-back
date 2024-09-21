@@ -28,7 +28,7 @@ public class WebExceptionHandler {
         if (cause instanceof JsonParseException)
             ex = new NanuriException(WebError.ILLEGAL_JSON);
 
-        if (cause instanceof JsonMappingException) {
+        else if (cause instanceof JsonMappingException) {
             var path = buildPath((JsonMappingException) cause);
 
             if (cause instanceof InvalidFormatException) {
@@ -40,7 +40,7 @@ public class WebExceptionHandler {
                     ex = new NanuriException(WebError.ILLEGAL_JSON, path + "은(는) " + targetType.getSimpleName() + "이어야 합니다.");
             }
 
-            if (cause instanceof MismatchedInputException) {
+            else if (cause instanceof MismatchedInputException) {
                 Class<?> targetType = ((MismatchedInputException) cause).getTargetType();
 
                 if (targetType != null)
@@ -48,11 +48,11 @@ public class WebExceptionHandler {
                 else
                     ex = new NanuriException(WebError.ILLEGAL_JSON, path + "을(를) 매핑하는 데 실패하였습니다.");
             }
-
-            ex = new NanuriException(WebError.ILLEGAL_JSON, "JSON 매핑에 실패하였습니다.");
+            else
+                ex = new NanuriException(WebError.ILLEGAL_JSON, "JSON 매핑에 실패하였습니다.");
         }
-
-        ex = new NanuriException(WebError.NOT_READABLE_HTTP_MESSAGE);
+        else
+            ex = new NanuriException(WebError.NOT_READABLE_HTTP_MESSAGE);
 
         return ResponseEntity.status(ex.getErrorCode().getHttpStatus()).body(ErrorResponse.from(ex));
     }
@@ -94,19 +94,19 @@ public class WebExceptionHandler {
         if (e instanceof MissingServletRequestParameterException)
             ex = new NanuriException(WebError.MISSING_REQUEST_PARAMETER, ((MissingServletRequestParameterException) e).getParameterName());
 
-        if (e instanceof MissingPathVariableException)
+        else if (e instanceof MissingPathVariableException)
             ex = new NanuriException(WebError.MISSING_PATH_VARIABLE, ((MissingPathVariableException) e).getVariableName());
 
-        if (e instanceof MissingRequestHeaderException)
+        else if (e instanceof MissingRequestHeaderException)
             ex = new NanuriException(WebError.MISSING_REQUEST_HEADER, ((MissingRequestHeaderException) e).getHeaderName());
 
-        if (e instanceof MissingRequestCookieException)
+        else if (e instanceof MissingRequestCookieException)
             ex = new NanuriException(WebError.MISSING_REQUEST_COOKIE, ((MissingRequestCookieException) e).getCookieName());
 
-        if (e instanceof MissingMatrixVariableException)
+        else if (e instanceof MissingMatrixVariableException)
             ex = new NanuriException(WebError.MISSING_MATRIX_VARIABLE, ((MissingMatrixVariableException) e).getVariableName());
-
-        ex = new NanuriException(WebError.SERVLET_ERROR);
+        else
+            ex = new NanuriException(WebError.SERVLET_ERROR);
 
         return ResponseEntity.status(ex.getErrorCode().getHttpStatus()).body(ErrorResponse.from(ex));
     }
