@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
+import team.hackerping.nanuri.security.filter.JwtAuthorizationFilter;
 import team.hackerping.nanuri.security.handler.AccessHandler;
 import team.hackerping.nanuri.security.handler.AuthenticationHandler;
 
@@ -17,6 +19,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity httpSecurity,
+            JwtAuthorizationFilter jwtAuthorizationFilter,
             SecurityProperties securityProperties,
             AccessHandler accessHandler,
             AuthenticationHandler authenticationHandler
@@ -27,22 +30,23 @@ public class SecurityConfig {
                 .frameOptions(FrameOptionsConfig::disable)
         );
 
+        // 개발 편의를 위해 모든 요청을 허용합니다.
+        httpSecurity.authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                .anyRequest().permitAll()
+        );
+        
         httpSecurity.exceptionHandling(exceptionHandling -> exceptionHandling
                 .authenticationEntryPoint(accessHandler)
                 .accessDeniedHandler(accessHandler)
         );
 
-        // 개발의 편의성을 위해 모든 요청을 허용합니다.
         httpSecurity.formLogin(formLogin -> formLogin
                 .loginProcessingUrl(securityProperties.loginProcessingUrl())
                 .successHandler(authenticationHandler)
                 .failureHandler(authenticationHandler)
-                .permitAll()
         );
 
-        httpSecurity.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                .anyRequest().permitAll()
-        );
+        httpSecurity.addFilterBefore(jwtAuthorizationFilter, AuthorizationFilter.class);
         return httpSecurity.build();
     }
 
