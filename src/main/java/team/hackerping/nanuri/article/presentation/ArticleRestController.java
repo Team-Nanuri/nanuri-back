@@ -95,6 +95,9 @@ public class ArticleRestController implements ArticleController{
     @Override
     @DeleteMapping("/{id}")
     public void deleteArticle(@PathVariable Long id) {
-        //Todo
+        //Todo: user id를 access token에서 추출한 정보로 수정
+        Long userId = 1L;
+
+        articleFacade.deleteArticle(userId, id);
     }
 }
