@@ -8,7 +8,10 @@ public record ArticlePagingParams(
         String categories,
         String keyword,
         ShareType shareType,
-        ArticleStatus status
+        ArticleStatus status,
+        Sort sort
 ) {
-
+    public enum Sort {
+        CREATED_AT_DESC, CREATED_AT_ASC
+    }
 }
