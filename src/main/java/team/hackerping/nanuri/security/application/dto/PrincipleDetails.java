@@ -11,11 +11,13 @@ import team.hackerping.nanuri.user.domain.UserStatus;
 
 @ToString
 public class PrincipleDetails implements UserDetails {
+    private final Long id;
     private final String username;
     private final String password;
     private final UserStatus status;
 
-    private PrincipleDetails(String username, String password, UserStatus status) {
+    private PrincipleDetails(Long id, String username, String password, UserStatus status) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.status = status;
@@ -23,6 +25,7 @@ public class PrincipleDetails implements UserDetails {
 
     public static PrincipleDetails from(User user) {
         return new PrincipleDetails(
+                user.getId(),
                 user.getUsername(),
                 user.getEncodedPassword(),
                 user.getUserStatus()
@@ -30,7 +33,7 @@ public class PrincipleDetails implements UserDetails {
     }
 
     public Map<String, Object> getClaims() {
-        return Map.of("username", username, "status", status);
+        return Map.of("id", id, "username", username, "status", status);
     }
 
     @Override
