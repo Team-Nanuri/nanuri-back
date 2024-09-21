@@ -60,6 +60,10 @@ public class Article {
         return image.getUrls().get(0);
     }
 
+    public void changeStatus(ArticleStatus status) {
+        this.status = status;
+    }
+
     public static Article of(String title, String content, ItemCategory itemCategory, ShareType shareType, LocalDate rentalStartDate, LocalDate rentalEndDate, ArticleImage image, User writer) {
         return Article.builder()
                 .title(title)

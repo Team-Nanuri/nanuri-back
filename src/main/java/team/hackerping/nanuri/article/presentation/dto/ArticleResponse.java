@@ -29,6 +29,7 @@ public class ArticleResponse {
 
     public record Detail(
             Long articleId,
+            ArticleStatus status,
             String title,
             String content,
             List<String> imageUrls,
@@ -42,6 +43,7 @@ public class ArticleResponse {
         public static Detail from(ArticleInfo.Detail detail) {
             return new Detail(
                     detail.id(),
+                    detail.status(),
                     detail.title(),
                     detail.content(),
                     detail.imageUrls(),
@@ -57,6 +59,7 @@ public class ArticleResponse {
 
     public record Simple(
             Long articleId,
+            ArticleStatus status,
             String title,
             String imageUrl,
             UserResponse.MaskedUserDto writer
