@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import team.hackerping.nanuri.auth.application.dto.command.AuthCommand;
 import team.hackerping.nanuri.auth.client.OpenAiAuthClient;
 import team.hackerping.nanuri.auth.persistence.ProfileS3Repository;
@@ -20,7 +21,7 @@ public class AuthService {
     private final ProfileS3Repository profileS3Repository;
     private final OpenAiAuthClient openAiAuthClient;
 
-    //    @Transactional
+    @Transactional
     public Long signup(AuthCommand.Signup command) {
         var username = command.username();
         var encodedPassword = passwordEncoder.encode(command.password());
@@ -35,6 +36,7 @@ public class AuthService {
     }
 
     @Async
+    @Transactional
     public CompletableFuture<Boolean> verifyProfile(final Long userId) {
         var user = userRepository.findById(userId).orElseThrow();
         var profileImageUrl = user.getProfileImageUrl();
