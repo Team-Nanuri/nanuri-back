@@ -1,6 +1,6 @@
 package team.hackerping.nanuri.article.application;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import team.hackerping.nanuri.article.application.command.ChangeStatusCommand;
 import team.hackerping.nanuri.article.application.command.RegisterArticleCommand;
