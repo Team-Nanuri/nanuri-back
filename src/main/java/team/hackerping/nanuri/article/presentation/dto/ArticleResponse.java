@@ -57,6 +57,7 @@ public class ArticleResponse {
             ShareType shareType,
             LocalDate rentalStartDate,
             LocalDate rentalEndDate,
+            LocalDateTime createdAt,
             Boolean liked,
             UserResponse.MaskedUserDto writer
     ){
@@ -71,6 +72,7 @@ public class ArticleResponse {
                     detail.shareType(),
                     detail.rentalStartDate(),
                     detail.rentalEndDate(),
+                    detail.createdAt(),
                     detail.liked(),
                     UserResponse.MaskedUserDto.from(detail.writer())
             );
