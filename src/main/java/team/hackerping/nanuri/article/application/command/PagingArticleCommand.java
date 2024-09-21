@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import team.hackerping.nanuri.article.domain.ArticleStatus;
 import team.hackerping.nanuri.article.domain.ItemCategory;
 import team.hackerping.nanuri.article.domain.ShareType;
-import team.hackerping.nanuri.article.presentation.dto.ArticlePagingParams;
+import team.hackerping.nanuri.article.domain.Sort;
 import team.hackerping.nanuri.global.application.SelfValidating;
 import team.hackerping.nanuri.global.exception.NanuriException;
 import team.hackerping.nanuri.global.exception.code.ArticleError;
@@ -27,9 +27,9 @@ public class PagingArticleCommand extends SelfValidating<PagingArticleCommand> {
     private final String keyword;
     private final ShareType shareType;
     private final ArticleStatus status;
-    private final ArticlePagingParams.Sort sort;
+    private final Sort sort;
 
-    public PagingArticleCommand(Long userId, Pageable pageable, Long writerId, String categories, String keyword, ShareType shareType, ArticleStatus status, ArticlePagingParams.Sort sort) {
+    public PagingArticleCommand(Long userId, Pageable pageable, Long writerId, String categories, String keyword, ShareType shareType, ArticleStatus status, Sort sort) {
         this.userId = userId;
         this.pageable = pageable;
         this.writerId = writerId;
@@ -37,7 +37,7 @@ public class PagingArticleCommand extends SelfValidating<PagingArticleCommand> {
         this.keyword = keyword;
         this.shareType = shareType;
         this.status = status;
-        this.sort = sort != null ? sort : ArticlePagingParams.Sort.CREATED_AT_DESC;
+        this.sort = sort != null ? sort : Sort.CREATED_AT_DESC;
     }
 
     public List<ItemCategory> convertStringToItemCategory(String categories) {

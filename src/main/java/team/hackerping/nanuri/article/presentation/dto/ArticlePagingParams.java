@@ -2,6 +2,7 @@ package team.hackerping.nanuri.article.presentation.dto;
 
 import team.hackerping.nanuri.article.domain.ArticleStatus;
 import team.hackerping.nanuri.article.domain.ShareType;
+import team.hackerping.nanuri.article.domain.Sort;
 
 public record ArticlePagingParams(
         Long writerId,
@@ -11,7 +12,4 @@ public record ArticlePagingParams(
         ArticleStatus status,
         Sort sort
 ) {
-    public enum Sort {
-        CREATED_AT_DESC, CREATED_AT_ASC
-    }
 }
