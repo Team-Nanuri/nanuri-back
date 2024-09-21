@@ -1,5 +1,6 @@
 package team.hackerping.nanuri.article.persistence;
 
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ public class ArticleJpaQueryRepository {
                         eqShareType(command.getShareType()),
                         eqStatus(command.getStatus())
                 )
+                .orderBy(orderSpecifier(command.getSort()))
                 .offset(command.getPageable().getOffset())
                 .limit(command.getPageable().getPageSize())
                 .fetch();
@@ -37,7 +39,11 @@ public class ArticleJpaQueryRepository {
                 .select(QArticle.article.count())
                 .from(QArticle.article)
                 .where(
-                        inTitle(command.getKeyword())
+                        inTitle(command.getKeyword()),
+                        eqWriterId(command.getWriterId()),
+                        inCategories(command.getCategories()),
+                        eqShareType(command.getShareType()),
+                        eqStatus(command.getStatus())
                 )
                 .fetchOne();
 
@@ -62,5 +68,16 @@ public class ArticleJpaQueryRepository {
 
     private BooleanExpression eqStatus(ArticleStatus status) {
         return status != null ? QArticle.article.status.eq(status) : null;
+    }
+
+    private OrderSpecifier orderSpecifier(Sort sort) {
+        if (sort == Sort.RENTAL_START_DATE_ASC)
+            return QArticle.article.rentalStartDate.asc();
+        else if (sort == Sort.RENTAL_START_DATE_DESC)
+            return QArticle.article.rentalStartDate.desc();
+        else if (sort == Sort.CREATED_AT_ASC)
+            return QArticle.article.createdAt.asc();
+        else
+            return QArticle.article.createdAt.desc();
     }
 }
