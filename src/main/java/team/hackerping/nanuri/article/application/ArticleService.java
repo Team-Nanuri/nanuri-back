@@ -2,6 +2,7 @@ package team.hackerping.nanuri.article.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import team.hackerping.nanuri.article.application.command.ChangeStatusCommand;
 import team.hackerping.nanuri.article.application.command.RegisterArticleCommand;
 import team.hackerping.nanuri.article.domain.Article;
 import team.hackerping.nanuri.article.domain.ArticleImage;
@@ -40,6 +41,17 @@ public class ArticleService {
         );
 
         articleRepository.save(article);
+
+        return article;
+    }
+
+    public Article changeArticleStatus(ChangeStatusCommand command) {
+        //TODO: 권한 확인
+
+        Article article = articleRepository.findById(command.getArticleId())
+                .orElseThrow(() -> new NanuriException(GeneralError.NOT_FOUND, "게시글"));
+
+        article.changeStatus(command.getStatus());
 
         return article;
     }
