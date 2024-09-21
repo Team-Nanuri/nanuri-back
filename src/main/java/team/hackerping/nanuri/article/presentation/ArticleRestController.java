@@ -34,7 +34,12 @@ public class ArticleRestController implements ArticleController{
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<ArticleResponse.Detail> getArticle(@PathVariable Long id) {
-        return null;
+        // TODO: user id를 access token에서 추출한 정보로 수정
+        Long userId = 1L;
+
+        ArticleInfo.Detail info = articleFacade.searchArticle(userId, id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(ArticleResponse.Detail.from(info));
     }
 
     @Override
