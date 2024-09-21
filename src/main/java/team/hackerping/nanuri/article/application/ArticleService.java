@@ -55,4 +55,9 @@ public class ArticleService {
 
         return article;
     }
+
+    public Article searchArticle(Long articleId) {
+        return articleRepository.findById(articleId)
+                .orElseThrow(() -> new NanuriException(GeneralError.NOT_FOUND, "게시글"));
+    }
 }
