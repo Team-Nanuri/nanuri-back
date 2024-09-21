@@ -14,7 +14,9 @@ public enum WebError implements ErrorCode {
     MISSING_PATH_VARIABLE(HttpStatus.BAD_REQUEST, "W102","필수 경로 변수가 누락되었습니다."),
     MISSING_REQUEST_HEADER(HttpStatus.BAD_REQUEST, "W103","필수 요청 헤더가 누락되었습니다."),
     MISSING_REQUEST_COOKIE(HttpStatus.BAD_REQUEST, "W104","필수 요청 쿠키가 누락되었습니다."),
-    MISSING_MATRIX_VARIABLE(HttpStatus.BAD_REQUEST, "W105","필수 매트릭스 변수가 누락되었습니다.");
+    MISSING_MATRIX_VARIABLE(HttpStatus.BAD_REQUEST, "W105","필수 매트릭스 변수가 누락되었습니다."),
+
+    INVALID_ARGUMENT(HttpStatus.BAD_REQUEST, "W200","유효하지 않은 인자가 전달되었습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
