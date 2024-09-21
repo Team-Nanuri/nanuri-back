@@ -2,6 +2,7 @@ package team.hackerping.nanuri.security.application.dto;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +27,10 @@ public class PrincipleDetails implements UserDetails {
                 user.getEncodedPassword(),
                 user.getUserStatus()
         );
+    }
+
+    public Map<String, Object> getClaims() {
+        return Map.of("username", username, "status", status);
     }
 
     @Override
