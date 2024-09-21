@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import team.hackerping.nanuri.article.application.ArticleFacade;
 import team.hackerping.nanuri.article.application.command.ChangeStatusCommand;
+import team.hackerping.nanuri.article.application.command.PagingArticleCommand;
 import team.hackerping.nanuri.article.application.info.ArticleInfo;
 import team.hackerping.nanuri.article.presentation.dto.ArticleResponse;
 import team.hackerping.nanuri.article.presentation.dto.ArticlePagingParams;
@@ -28,7 +29,23 @@ public class ArticleRestController implements ArticleController{
             @PageableDefault Pageable pageable,
             ArticlePagingParams params
     ) {
-        return null;
+        //TODO: user id를 access token에서 추출한 정보로 수정
+        Long userId = 1L;
+
+        PagingArticleCommand command = new PagingArticleCommand(
+                userId,
+                pageable,
+                params.writerId(),
+                params.categories(),
+                params.keyword(),
+                params.shareType(),
+                params.status(),
+                params.sort()
+        );
+
+        ArticleInfo.Paging info = articleFacade.searchArticles(command);
+
+        return ResponseEntity.status(HttpStatus.OK).body(ArticleResponse.Paging.of(info));
     }
 
     @Override
