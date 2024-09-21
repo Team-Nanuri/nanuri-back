@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import team.hackerping.nanuri.article.application.ArticleFacade;
+import team.hackerping.nanuri.article.application.command.ChangeStatusCommand;
 import team.hackerping.nanuri.article.application.info.ArticleInfo;
 import team.hackerping.nanuri.article.presentation.dto.ArticleResponse;
 import team.hackerping.nanuri.article.presentation.dto.ArticlePagingParams;
@@ -59,8 +60,14 @@ public class ArticleRestController implements ArticleController{
     public ResponseEntity<ArticleResponse.Detail> changeArticleStatus(
             @PathVariable Long id,
             @RequestBody Status request) {
-        //Todo
-        return null;
+
+        // TODO: user id를 access token에서 추출한 정보로 수정
+        Long userId = 1L;
+
+        ChangeStatusCommand command = new ChangeStatusCommand(userId, id, request.status());
+        ArticleInfo.Detail info = articleFacade.changeArticleStatus(command);
+
+        return ResponseEntity.status(HttpStatus.OK).body(ArticleResponse.Detail.from(info));
     }
 
     @Override
