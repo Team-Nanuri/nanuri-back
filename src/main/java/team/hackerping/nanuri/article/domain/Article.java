@@ -7,6 +7,7 @@ import team.hackerping.nanuri.user.domain.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE) @Builder(access = AccessLevel.PRIVATE)
@@ -58,6 +59,13 @@ public class Article {
             return null;
 
         return image.getUrls().get(0);
+    }
+
+    public List<String> getImages() {
+        if (image == null)
+            return null;
+
+        return image.getUrls();
     }
 
     public void changeStatus(ArticleStatus status) {
