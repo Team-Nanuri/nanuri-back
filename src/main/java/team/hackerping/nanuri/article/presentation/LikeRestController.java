@@ -26,6 +26,9 @@ public class LikeRestController implements LikeController {
     @Override
     @DeleteMapping
     public void unlikeArticle(Long articleId) {
-        // TODO: 좋아요 취소 기능 구현
+        // TODO: user id를 access token에서 추출한 정보로 수정
+        Long userId = 1L;
+
+        likeService.unlikeArticle(userId, articleId);
     }
 }

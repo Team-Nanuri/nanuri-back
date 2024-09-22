@@ -58,4 +58,15 @@ public class LikeService {
 
         likeRepository.save(Like.of(user, article));
     }
+
+    public void unlikeArticle(Long userId, Long articleId) {
+        User user = userRepository.getReferenceById(userId);
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new NanuriException(GeneralError.NOT_FOUND, "게시글"));
+
+        Like like = likeRepository.findByUserAndArticle(user, article)
+                .orElseThrow(() -> new NanuriException(GeneralError.NOT_FOUND, "좋아요"));
+
+        likeRepository.delete(like);
+    }
 }
