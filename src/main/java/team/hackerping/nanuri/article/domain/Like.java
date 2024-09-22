@@ -30,4 +30,14 @@ public class Like {
     private Article article;
 
     private LocalDateTime createdAt;
+
+    public Like(User user, Article article, LocalDateTime createdAt) {
+        this.user = user;
+        this.article = article;
+        this.createdAt = createdAt;
+    }
+
+    public static Like of(User user, Article article) {
+        return new Like(user, article, LocalDateTime.now());
+    }
 }
