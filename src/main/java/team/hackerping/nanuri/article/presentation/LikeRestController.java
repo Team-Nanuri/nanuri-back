@@ -17,7 +17,10 @@ public class LikeRestController implements LikeController {
     @Override
     @PostMapping
     public void likeArticle(Long articleId) {
-        // TODO: 좋아요 기능 구현
+        // TODO: user id를 access token에서 추출한 정보로 수정
+        Long userId = 1L;
+
+        likeService.likeArticle(userId, articleId);
     }
 
     @Override
