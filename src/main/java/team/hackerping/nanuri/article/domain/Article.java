@@ -70,6 +70,16 @@ public class Article {
         return image.getUrls();
     }
 
+    public void update(String title, String content, ItemCategory itemCategory, ShareType shareType, LocalDate rentalStartDate, LocalDate rentalEndDate, ArticleImage image) {
+        this.title = title;
+        this.content = content;
+        this.itemCategory = itemCategory;
+        this.shareType = shareType;
+        this.rentalStartDate = rentalStartDate;
+        this.rentalEndDate = rentalEndDate;
+        this.image = image;
+    }
+
     public void changeStatus(ArticleStatus status) {
         this.status = status;
     }
