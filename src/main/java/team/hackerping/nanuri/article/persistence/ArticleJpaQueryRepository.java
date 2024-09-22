@@ -24,7 +24,7 @@ public class ArticleJpaQueryRepository {
                 .select(QArticle.article)
                 .from(QArticle.article)
                 .where(
-                        inTitle(command.getKeyword()),
+                        containsTitle(command.getKeyword()),
                         eqWriterId(command.getWriterId()),
                         inCategories(command.getCategories()),
                         eqShareType(command.getShareType()),
@@ -39,7 +39,7 @@ public class ArticleJpaQueryRepository {
                 .select(QArticle.article.count())
                 .from(QArticle.article)
                 .where(
-                        inTitle(command.getKeyword()),
+                        containsTitle(command.getKeyword()),
                         eqWriterId(command.getWriterId()),
                         inCategories(command.getCategories()),
                         eqShareType(command.getShareType()),
@@ -50,8 +50,8 @@ public class ArticleJpaQueryRepository {
         return new PageImpl<>(query, command.getPageable(), total == null ? 0 : total);
     }
 
-    private BooleanExpression inTitle(String title) {
-        return StringUtils.hasText(title) ? QArticle.article.title.in(title) : null;
+    private BooleanExpression containsTitle(String title) {
+        return StringUtils.hasText(title) ? QArticle.article.title.contains(title) : null;
     }
 
     private BooleanExpression eqWriterId(Long writerId) {
