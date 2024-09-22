@@ -6,6 +6,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import team.hackerping.nanuri.article.application.ArticleFacade;
 import team.hackerping.nanuri.article.application.command.ChangeStatusCommand;
@@ -29,8 +30,7 @@ public class ArticleRestController implements ArticleController{
             @PageableDefault Pageable pageable,
             ArticlePagingParams params
     ) {
-        //TODO: user id를 access token에서 추출한 정보로 수정
-        Long userId = 1L;
+        Long userId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
         PagingArticleCommand command = new PagingArticleCommand(
                 userId,
@@ -51,8 +51,8 @@ public class ArticleRestController implements ArticleController{
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<ArticleResponse.Detail> getArticle(@PathVariable Long id) {
-        // TODO: user id를 access token에서 추출한 정보로 수정
-        Long userId = 1L;
+
+        Long userId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
         ArticleInfo.Detail info = articleFacade.searchArticle(userId, id);
 
@@ -62,8 +62,8 @@ public class ArticleRestController implements ArticleController{
     @Override
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<ArticleResponse.Detail> createArticle(@ModelAttribute Upsert request) {
-        // TODO: user id를 access token에서 추출한 정보로 수정
-        Long userId = 1L;
+
+        Long userId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
         ArticleInfo.Detail info = articleFacade.registerArticle(request.toCommand(userId));
 
@@ -73,8 +73,8 @@ public class ArticleRestController implements ArticleController{
     @Override
     @PutMapping("/{id}")
     public ResponseEntity<ArticleResponse.Detail> modifyArticle(@PathVariable Long id, @RequestBody Upsert request) {
-        // TODO: user id를 access token에서 추출한 정보로 수정
-        Long userId = 1L;
+
+        Long userId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
         ArticleInfo.Detail info = articleFacade.updateArticle(request.toCommand(userId, id));
 
@@ -99,8 +99,8 @@ public class ArticleRestController implements ArticleController{
     @Override
     @DeleteMapping("/{id}")
     public void deleteArticle(@PathVariable Long id) {
-        //Todo: user id를 access token에서 추출한 정보로 수정
-        Long userId = 1L;
+
+        Long userId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
         articleFacade.deleteArticle(userId, id);
     }
