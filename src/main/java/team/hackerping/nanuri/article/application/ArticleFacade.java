@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import team.hackerping.nanuri.article.application.command.ChangeStatusCommand;
 import team.hackerping.nanuri.article.application.command.PagingArticleCommand;
 import team.hackerping.nanuri.article.application.command.RegisterArticleCommand;
+import team.hackerping.nanuri.article.application.command.UpdateArticleCommand;
 import team.hackerping.nanuri.article.application.info.ArticleInfo;
 import team.hackerping.nanuri.article.domain.Article;
 import team.hackerping.nanuri.global.annotation.Facade;
@@ -53,5 +54,12 @@ public class ArticleFacade {
 
     public void deleteArticle(Long userId, Long articleId) {
         articleService.deleteArticle(userId, articleId);
+    }
+
+    public ArticleInfo.Detail updateArticle(UpdateArticleCommand command) {
+        Article article = articleService.updateArticle(command);
+        ArticleInfo.Detail.of(article, false);
+
+        return ArticleInfo.Detail.of(article, false);
     }
 }

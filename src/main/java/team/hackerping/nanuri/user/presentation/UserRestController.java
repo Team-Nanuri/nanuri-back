@@ -2,6 +2,7 @@ package team.hackerping.nanuri.user.presentation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +21,8 @@ public class UserRestController implements UserController{
     @Override
     @GetMapping("/me")
     public ResponseEntity<UserResponse.UserDto> getMyInfo() {
-        // AccessToken에서 값을 가져오는 것으로 수정
-        Long userId = 1L;
+
+        Long userId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
         UserInfo info = userService.getUserInfo(userId);
         UserResponse.UserDto response = UserResponse.UserDto.from(info);

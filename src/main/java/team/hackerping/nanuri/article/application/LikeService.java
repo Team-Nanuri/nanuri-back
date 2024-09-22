@@ -1,10 +1,14 @@
 package team.hackerping.nanuri.article.application;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
+import team.hackerping.nanuri.article.application.command.PagingArticleByLikeCommand;
+import team.hackerping.nanuri.article.application.info.ArticleInfo;
 import team.hackerping.nanuri.article.domain.Article;
 import team.hackerping.nanuri.article.domain.Like;
+import team.hackerping.nanuri.article.persistence.ArticleLikeQueryRepository;
 import team.hackerping.nanuri.article.persistence.ArticleRepository;
 import team.hackerping.nanuri.article.persistence.LikeRepository;
 import team.hackerping.nanuri.global.exception.NanuriException;
@@ -25,6 +29,7 @@ public class LikeService {
     private final LikeRepository likeRepository;
     private final UserRepository userRepository;
     private final ArticleRepository articleRepository;
+    private final ArticleLikeQueryRepository articleLikeQueryRepository;
 
     public Boolean searchLike(Long userId, Long articleId) {
         return likeRepository.existsByUserIdAndArticleId(userId, articleId);
@@ -53,6 +58,9 @@ public class LikeService {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new NanuriException(GeneralError.NOT_FOUND, "게시글"));
 
+        if (user.equals(article.getWriter()))
+            throw new NanuriException(ArticleError.CANNOT_LIKE_MY_ARTICLE);
+
         if (likeRepository.existsByUserAndArticle(user, article))
             throw new NanuriException(ArticleError.ALREADY_LIKED);
 
@@ -68,5 +76,11 @@ public class LikeService {
                 .orElseThrow(() -> new NanuriException(GeneralError.NOT_FOUND, "좋아요"));
 
         likeRepository.delete(like);
+    }
+
+    public ArticleInfo.Paging myLikes(PagingArticleByLikeCommand command) {
+        Page<Article> page = articleLikeQueryRepository.pagingArticleByLike(command.getUserId(), command.getPageable());
+
+        return ArticleInfo.Paging.of(page, searchLikes(command.getUserId(), page.getContent()));
     }
 }

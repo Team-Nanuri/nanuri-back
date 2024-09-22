@@ -1,34 +1,51 @@
 package team.hackerping.nanuri.article.presentation;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 import team.hackerping.nanuri.article.application.LikeService;
+import team.hackerping.nanuri.article.application.command.PagingArticleByLikeCommand;
+import team.hackerping.nanuri.article.application.info.ArticleInfo;
+import team.hackerping.nanuri.article.presentation.dto.ArticleResponse;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/articles/{id}/likes")
+@RequestMapping("/api/articles")
 @RestController
 public class LikeRestController implements LikeController {
 
     private final LikeService likeService;
 
     @Override
-    @PostMapping
-    public void likeArticle(Long articleId) {
-        // TODO: user id를 access token에서 추출한 정보로 수정
-        Long userId = 1L;
+    @PostMapping("/{id}/likes")
+    public void likeArticle(@PathVariable Long id) {
 
-        likeService.likeArticle(userId, articleId);
+        Long userId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+
+        likeService.likeArticle(userId, id);
     }
 
     @Override
-    @DeleteMapping
-    public void unlikeArticle(Long articleId) {
-        // TODO: user id를 access token에서 추출한 정보로 수정
-        Long userId = 1L;
+    @DeleteMapping("/{id}/likes")
+    public void unlikeArticle(@PathVariable Long id) {
 
-        likeService.unlikeArticle(userId, articleId);
+        Long userId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+
+        likeService.unlikeArticle(userId, id);
+    }
+
+    @Override
+    @GetMapping("/likes")
+    public ResponseEntity<ArticleResponse.Paging> myLikes(
+            @ParameterObject Pageable pageable
+    ) {
+        Long userId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+
+        ArticleInfo.Paging info = likeService.myLikes(new PagingArticleByLikeCommand(userId, pageable));
+
+        return ResponseEntity.status(HttpStatus.OK).body(ArticleResponse.Paging.of(info));
     }
 }
