@@ -27,7 +27,7 @@ public class ChatResponse {
     ) {
         public static RoomInfo from(ChatRoomInfo.Simple simple) {
             return new RoomInfo(
-                    simple.article().articleId(),
+                    simple.roomId(),
                     ArticleResponse.Simple.from(simple.article()),
                     ChatMessage.from(simple.lastMessage()),
                     UserResponse.MaskedUserDto.from(simple.otherUser())

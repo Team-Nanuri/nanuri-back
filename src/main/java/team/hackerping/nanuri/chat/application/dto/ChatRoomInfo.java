@@ -20,12 +20,14 @@ public class ChatRoomInfo {
     }
 
     public record Simple(
+            Long roomId,
             ArticleInfo.Simple article,
             ChatMessageInfo.Detail lastMessage,
             UserInfo otherUser
     ) {
         public static Simple from(ChatRoom chatRoom) {
             return new Simple(
+                    chatRoom.getId(),
                     ArticleInfo.Simple.from(chatRoom.getArticle()),
                     ChatMessageInfo.Detail.from(chatRoom.getLastMessage()),
                     UserInfo.from(chatRoom.getRecipient())
