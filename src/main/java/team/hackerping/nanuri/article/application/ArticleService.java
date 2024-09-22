@@ -1,6 +1,7 @@
 package team.hackerping.nanuri.article.application;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import team.hackerping.nanuri.article.application.command.ChangeStatusCommand;
@@ -11,6 +12,7 @@ import team.hackerping.nanuri.article.domain.Article;
 import team.hackerping.nanuri.article.domain.ArticleImage;
 import team.hackerping.nanuri.article.persistence.ArticleJpaQueryRepository;
 import team.hackerping.nanuri.article.persistence.ArticleRepository;
+import team.hackerping.nanuri.article.persistence.ArticleS3Repository;
 import team.hackerping.nanuri.global.exception.NanuriException;
 import team.hackerping.nanuri.global.exception.code.ArticleError;
 import team.hackerping.nanuri.global.exception.code.GeneralError;
@@ -20,11 +22,13 @@ import team.hackerping.nanuri.user.persistence.UserRepository;
 import java.util.List;
 import java.util.Objects;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ArticleService {
     private final ArticleRepository articleRepository;
     private final ArticleJpaQueryRepository articleJpaQueryRepository;
+    private final ArticleS3Repository articleS3Repository;
     private final UserRepository userRepository;
 
     public Article registerArticle(RegisterArticleCommand command) {
@@ -32,8 +36,7 @@ public class ArticleService {
         User user = userRepository.findById(command.getWriterId())
                 .orElseThrow(() -> new NanuriException(GeneralError.NOT_FOUND, "사용자"));
 
-        // TODO: S3에 이미지 업로드
-        List<String> imgUrls = List.of("11111", "22222", "33333");
+        List<String> imgUrls = articleS3Repository.uploadArticleImage(command.getWriterId(), command.getImages());
         ArticleImage image = ArticleImage.of(imgUrls);
 
         Article article = Article.of(
@@ -80,8 +83,7 @@ public class ArticleService {
         if (article.getWriter().getId() != command.getUserId())
             throw new NanuriException(ArticleError.UPDATE_FORBIDDEN, "본인의 게시글이 아닙니다.");
 
-        // TODO: S3에 업로드 및 기존 사진 삭제
-        List<String> imgUrls = List.of("aaaaaa", "bbbbbb", "cccccc");
+        List<String> imgUrls = articleS3Repository.uploadArticleImage(command.getUserId(), command.getImages());
         ArticleImage image = ArticleImage.of(imgUrls);
 
         article.update(
