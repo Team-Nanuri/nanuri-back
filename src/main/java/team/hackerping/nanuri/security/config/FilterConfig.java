@@ -21,10 +21,11 @@ public class FilterConfig {
         var source = new UrlBasedCorsConfigurationSource();
         var config = new CorsConfiguration();
 
-        config.setAllowCredentials(true);
+        config.setAllowCredentials(false);
         config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
+
         source.registerCorsConfiguration("/**", config);
 
         return new CorsFilter(source);
