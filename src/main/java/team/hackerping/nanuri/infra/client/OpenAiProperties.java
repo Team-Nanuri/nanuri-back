@@ -1,4 +1,4 @@
-package team.hackerping.nanuri.infra.openAi;
+package team.hackerping.nanuri.infra.client;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

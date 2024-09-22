@@ -15,7 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.View;
-import team.hackerping.nanuri.infra.openAi.OpenAiProperties;
+import team.hackerping.nanuri.infra.client.OpenAiProperties;
 import team.hackerping.nanuri.user.domain.UserType;
 
 @Slf4j
@@ -23,7 +23,7 @@ import team.hackerping.nanuri.user.domain.UserType;
 @RequiredArgsConstructor
 public class OpenAiAuthClient {
     private final OpenAiProperties openAiProperties;
-    private final RestTemplate restClient = new RestTemplate();
+    private final RestTemplate restClient;
     private final ObjectMapper objectMapper;
     private final View error;
 
