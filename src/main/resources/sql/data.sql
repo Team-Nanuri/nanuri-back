@@ -14,7 +14,7 @@ INSERT INTO MEMBER(USERNAME, ENCODED_PASSWORD, USER_TYPE, USER_STATUS) VALUES('s
 INSERT INTO
     ARTICLE(WRITER_ID, TITLE, CONTENT, ITEM_CATEGORY, SHARE_TYPE, CREATED_AT, STATUS, DELETED)
 VALUES
-    (1, '시디즈 의자', '2년 간 잘 사용하다가 이사가서 나눔합니다.', 'FURNITURE_INTERIOR', 'DONATION', NOW(), 'ONGOING', false, ),
+    (1, '시디즈 의자', '2년 간 잘 사용하다가 이사가서 나눔합니다.', 'FURNITURE_INTERIOR', 'DONATION', NOW(), 'ONGOING', false),
     (1, '휴지', '이삿짐 정리하면서 물건 처분합니다.', 'MISCELLANEOUS_GOODS', 'DONATION', NOW(), 'ONGOING', false),
     (2, 'Computer Networking, 7/E', 'it''s a major book, and I wrote note in English.', 'BOOK_TICKET_ALBUM', 'DONATION', NOW(), 'ONGOING', false),
     (2, '노트북 거치대 나눔', '짱짱하고 튼튼합니다.', 'MISCELLANEOUS_GOODS', 'DONATION', NOW(), 'ONGOING', false),
