@@ -22,7 +22,7 @@ public class ArticleS3Repository {
 
     public List<String> uploadArticleImage(Long userId, List<MultipartFile> images) {
         if (images == null || images.isEmpty()) {
-            return null;
+            return List.of("https://nanuri-auth.s3.ap-northeast-2.amazonaws.com/article-image/13/%ED%86%A0%EB%81%BC.png");
         }
 
         var bucketName = bucketProperties.bucketName();
