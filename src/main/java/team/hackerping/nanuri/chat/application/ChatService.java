@@ -2,6 +2,7 @@ package team.hackerping.nanuri.chat.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team.hackerping.nanuri.article.persistence.ArticleRepository;
@@ -23,6 +24,7 @@ public class ChatService {
     private final ChatRepository chatRepository;
 
     @Transactional
+    @PreAuthorize("hasRole('ACTIVATED')")
     public Long createRoom(ChatRoomCommand.Create command) {
         return chatRepository.findChatRoomByArticleIdAndRecipientId(command.articleId(), command.senderId())
                 .map(ChatRoom::getId)
@@ -40,6 +42,7 @@ public class ChatService {
     }
 
     @Transactional
+    @PreAuthorize("hasRole('ACTIVATED')")
     public void sendMessage(ChatMessageCommand.Create command) {
         var room = chatRepository.findById(command.roomId())
                 .orElseThrow(() -> new NanuriException(GeneralError.NOT_FOUND, "채팅방"));

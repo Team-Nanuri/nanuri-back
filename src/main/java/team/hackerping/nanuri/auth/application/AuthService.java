@@ -3,6 +3,7 @@ package team.hackerping.nanuri.auth.application;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import team.hackerping.nanuri.user.domain.User;
 import team.hackerping.nanuri.user.persistence.UserRepository;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
@@ -48,6 +50,7 @@ public class AuthService {
 
         user.changeUserType(userType);
         user.activate();
+        log.info("User {} is activated", user.getId());
         return CompletableFuture.completedFuture(true);
     }
 }
