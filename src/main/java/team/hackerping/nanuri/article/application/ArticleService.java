@@ -18,6 +18,7 @@ import team.hackerping.nanuri.user.domain.User;
 import team.hackerping.nanuri.user.persistence.UserRepository;
 
 import java.util.List;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
@@ -52,10 +53,11 @@ public class ArticleService {
     }
 
     public Article changeArticleStatus(ChangeStatusCommand command) {
-        //TODO: 권한 확인
-
         Article article = articleRepository.findById(command.getArticleId())
                 .orElseThrow(() -> new NanuriException(GeneralError.NOT_FOUND, "게시글"));
+
+        if (article.getWriter().getId() != command.getUserId())
+            throw new NanuriException(ArticleError.UPDATE_FORBIDDEN, "본인의 게시글이 아닙니다.");
 
         article.changeStatus(command.getStatus());
 
@@ -96,7 +98,11 @@ public class ArticleService {
     }
 
     public void deleteArticle(Long userId, Long articleId) {
-        // TODO: 권한 검사
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new NanuriException(GeneralError.NOT_FOUND, "게시글"));
+
+        if (!Objects.equals(article.getWriter().getId(), userId))
+            throw new NanuriException(ArticleError.UPDATE_FORBIDDEN, "본인의 게시글이 아닙니다.");
 
         articleRepository.deleteById(articleId);
     }
