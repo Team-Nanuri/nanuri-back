@@ -71,8 +71,8 @@ public class ArticleRestController implements ArticleController{
     }
 
     @Override
-    @PutMapping("/{id}")
-    public ResponseEntity<ArticleResponse.Detail> modifyArticle(@PathVariable Long id, @RequestBody Upsert request) {
+    @PutMapping(path = "/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<ArticleResponse.Detail> modifyArticle(@PathVariable Long id, @ModelAttribute Upsert request) {
 
         Long userId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 

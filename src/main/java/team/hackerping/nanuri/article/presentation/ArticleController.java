@@ -51,7 +51,7 @@ public interface ArticleController {
     )
     ResponseEntity<ArticleResponse.Detail> modifyArticle(
             @PathVariable Long id,
-            @RequestBody(description = "게시글 수정 정보") ArticleRequest.Upsert request
+            @ModelAttribute ArticleRequest.Upsert request
     );
 
     @Operation(summary = "게시글 상태 변경")
