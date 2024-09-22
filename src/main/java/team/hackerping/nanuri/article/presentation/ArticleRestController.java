@@ -1,10 +1,10 @@
 package team.hackerping.nanuri.article.presentation;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +17,7 @@ import team.hackerping.nanuri.article.presentation.dto.ArticlePagingParams;
 import team.hackerping.nanuri.article.presentation.dto.ArticleRequest.Status;
 import team.hackerping.nanuri.article.presentation.dto.ArticleRequest.Upsert;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/articles")
@@ -60,7 +61,7 @@ public class ArticleRestController implements ArticleController{
     }
 
     @Override
-    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping
     public ResponseEntity<ArticleResponse.Detail> createArticle(@ModelAttribute Upsert request) {
 
         Long userId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
@@ -71,8 +72,8 @@ public class ArticleRestController implements ArticleController{
     }
 
     @Override
-    @PutMapping("/{id}")
-    public ResponseEntity<ArticleResponse.Detail> modifyArticle(@PathVariable Long id, @RequestBody Upsert request) {
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<ArticleResponse.Detail> modifyArticle(@PathVariable Long id, @ModelAttribute Upsert request) {
 
         Long userId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
@@ -87,8 +88,7 @@ public class ArticleRestController implements ArticleController{
             @PathVariable Long id,
             @RequestBody Status request) {
 
-        // TODO: user id를 access token에서 추출한 정보로 수정
-        Long userId = 1L;
+        Long userId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
         ChangeStatusCommand command = new ChangeStatusCommand(userId, id, request.status());
         ArticleInfo.Detail info = articleFacade.changeArticleStatus(command);
