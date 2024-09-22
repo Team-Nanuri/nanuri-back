@@ -3,7 +3,6 @@ package team.hackerping.nanuri.article.presentation.dto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-
 import team.hackerping.nanuri.article.application.info.ArticleInfo;
 import team.hackerping.nanuri.article.domain.ArticleStatus;
 import team.hackerping.nanuri.article.domain.ItemCategory;
@@ -14,7 +13,7 @@ public class ArticleResponse {
     public record Paging(
             List<Basic> contents,
             Integer totalPages
-    ){
+    ) {
         public static Paging of(ArticleInfo.Paging paging) {
 
             return new Paging(paging.articles().stream()
@@ -32,7 +31,7 @@ public class ArticleResponse {
             LocalDateTime createdAt,
             ShareType shareType,
             Boolean liked
-    ){
+    ) {
         public static Basic from(ArticleInfo.Basic basic) {
             return new Basic(
                     basic.articleId(),
@@ -60,7 +59,7 @@ public class ArticleResponse {
             LocalDateTime createdAt,
             Boolean liked,
             UserResponse.MaskedUserDto writer
-    ){
+    ) {
         public static Detail from(ArticleInfo.Detail detail) {
             return new Detail(
                     detail.id(),
@@ -85,5 +84,15 @@ public class ArticleResponse {
             String title,
             String imageUrl,
             UserResponse.MaskedUserDto writer
-    ) { }
+    ) {
+        public static Simple from(ArticleInfo.Simple simple) {
+            return new Simple(
+                    simple.articleId(),
+                    simple.status(),
+                    simple.title(),
+                    simple.imageUrl(),
+                    UserResponse.MaskedUserDto.from(simple.writer())
+            );
+        }
+    }
 }

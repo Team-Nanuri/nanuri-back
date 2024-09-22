@@ -8,6 +8,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -23,6 +24,8 @@ public class PapagoClient {
     private final PapagoProperties papagoProperties;
     private final RestTemplate restTemplate;
 
+
+    @PreAuthorize("hasRole('ACTIVATED')")
     public String translate(String text) {
         var url = papagoProperties.apiUrl();
         var header = this.getHeaders();

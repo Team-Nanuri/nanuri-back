@@ -5,6 +5,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "security.login")
 public record SecurityProperties(
         String loginProcessingUrl,
-        String[] authBaseUrl
+        String authBaseUrl,
+        String[] swaggerUrl,
+        String[] permitAllUrls
 ) {
 }

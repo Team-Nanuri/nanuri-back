@@ -26,8 +26,8 @@ public class AuthenticationHandler implements AuthenticationSuccessHandler, Auth
                                         Authentication authentication) throws IOException, ServletException {
         var principleDetails = (PrincipleDetails) authentication.getPrincipal();
         var tokens = jwtService.generateLoginToken(principleDetails.getClaims());
-
         setTokenResponse(response, tokens);
+        log.info("Authentication success: {}", principleDetails.getUsername());
     }
 
     private void setTokenResponse(HttpServletResponse response, TokenDetails tokens)
