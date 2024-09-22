@@ -1,34 +1,32 @@
 package team.hackerping.nanuri.chat.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import team.hackerping.nanuri.user.domain.User;
 
-import java.time.LocalDateTime;
-
+@Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity
 public class ChatMessage {
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CHAT_MESSAGE_ID")
-    private Long id;
-
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "ROOM_ID")
-    private ChatRoom room;
-
+    private Long senderId;
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "SENDER_ID")
-    private User sender;
-
+    private Long receiverId;
     @NotNull
-    private String content;
+    private String message;
 
     @NotNull
     private LocalDateTime createdAt;
+
+    private ChatMessage(Long senderId, Long receiverId, String message) {
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.message = message;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public static ChatMessage of(Long senderId, Long receiverId, String message) {
+        return new ChatMessage(senderId, receiverId, message);
+    }
 }
