@@ -73,8 +73,12 @@ public class ArticleRestController implements ArticleController{
     @Override
     @PutMapping("/{id}")
     public ResponseEntity<ArticleResponse.Detail> modifyArticle(@PathVariable Long id, @RequestBody Upsert request) {
-        //Todo
-        return null;
+        // TODO: user id를 access token에서 추출한 정보로 수정
+        Long userId = 1L;
+
+        ArticleInfo.Detail info = articleFacade.updateArticle(request.toCommand(userId, id));
+
+        return ResponseEntity.status(HttpStatus.OK).body(ArticleResponse.Detail.from(info));
     }
 
     @Override
