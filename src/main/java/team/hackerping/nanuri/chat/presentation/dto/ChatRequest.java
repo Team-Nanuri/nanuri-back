@@ -1,7 +1,7 @@
 package team.hackerping.nanuri.chat.presentation.dto;
 
-import team.hackerping.nanuri.chat.application.dto.ChatMessageCommand;
-import team.hackerping.nanuri.chat.application.dto.ChatRoomCommand;
+import team.hackerping.nanuri.chat.application.command.ChatMessageCommand;
+import team.hackerping.nanuri.chat.application.command.ChatRoomCommand;
 
 public class ChatRequest {
     public record Create(
