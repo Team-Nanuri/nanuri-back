@@ -1,11 +1,14 @@
 package team.hackerping.nanuri.article.application;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import team.hackerping.nanuri.article.application.command.ChangeStatusCommand;
+import team.hackerping.nanuri.article.application.command.PagingArticleCommand;
 import team.hackerping.nanuri.article.application.command.RegisterArticleCommand;
 import team.hackerping.nanuri.article.domain.Article;
 import team.hackerping.nanuri.article.domain.ArticleImage;
+import team.hackerping.nanuri.article.persistence.ArticleJpaQueryRepository;
 import team.hackerping.nanuri.article.persistence.ArticleRepository;
 import team.hackerping.nanuri.global.exception.NanuriException;
 import team.hackerping.nanuri.global.exception.code.GeneralError;
@@ -18,6 +21,7 @@ import java.util.List;
 @Service
 public class ArticleService {
     private final ArticleRepository articleRepository;
+    private final ArticleJpaQueryRepository articleJpaQueryRepository;
     private final UserRepository userRepository;
 
     public Article registerArticle(RegisterArticleCommand command) {
@@ -54,5 +58,20 @@ public class ArticleService {
         article.changeStatus(command.getStatus());
 
         return article;
+    }
+
+    public Article searchArticle(Long articleId) {
+        return articleRepository.findById(articleId)
+                .orElseThrow(() -> new NanuriException(GeneralError.NOT_FOUND, "게시글"));
+    }
+
+    public Page<Article> searchArticles(PagingArticleCommand command) {
+        return articleJpaQueryRepository.pagingByCriteria(command);
+    }
+
+    public void deleteArticle(Long userId, Long articleId) {
+        // TODO: 권한 검사
+
+        articleRepository.deleteById(articleId);
     }
 }

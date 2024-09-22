@@ -12,11 +12,18 @@ import team.hackerping.nanuri.user.presentation.dto.UserResponse;
 
 public class ArticleResponse {
     public record Paging(
-            List<Info> contents,
+            List<Basic> contents,
             Integer totalPages
-    ){}
+    ){
+        public static Paging of(ArticleInfo.Paging paging) {
 
-    public record Info(
+            return new Paging(paging.articles().stream()
+                    .map(Basic::from)
+                    .toList(), paging.totalPage());
+        }
+    }
+
+    public record Basic(
             Long articleId,
             String title,
             String content,
@@ -25,7 +32,20 @@ public class ArticleResponse {
             LocalDateTime createdAt,
             ShareType shareType,
             Boolean liked
-    ){}
+    ){
+        public static Basic from(ArticleInfo.Basic basic) {
+            return new Basic(
+                    basic.articleId(),
+                    basic.title(),
+                    basic.content(),
+                    basic.imageUrl(),
+                    basic.status(),
+                    basic.createdAt(),
+                    basic.shareType(),
+                    basic.liked()
+            );
+        }
+    }
 
     public record Detail(
             Long articleId,
@@ -37,6 +57,7 @@ public class ArticleResponse {
             ShareType shareType,
             LocalDate rentalStartDate,
             LocalDate rentalEndDate,
+            LocalDateTime createdAt,
             Boolean liked,
             UserResponse.MaskedUserDto writer
     ){
@@ -51,6 +72,7 @@ public class ArticleResponse {
                     detail.shareType(),
                     detail.rentalStartDate(),
                     detail.rentalEndDate(),
+                    detail.createdAt(),
                     detail.liked(),
                     UserResponse.MaskedUserDto.from(detail.writer())
             );

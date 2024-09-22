@@ -1,5 +1,8 @@
 package team.hackerping.nanuri.article.application.info;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.util.Pair;
 import team.hackerping.nanuri.article.domain.Article;
 import team.hackerping.nanuri.article.domain.ArticleStatus;
 import team.hackerping.nanuri.article.domain.ItemCategory;
@@ -10,7 +13,28 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 public class ArticleInfo {
+
+    public record Paging(
+            List<Basic> articles,
+            int totalPage,
+            int currentPage
+    ) {
+        public static Paging of(Page<Article> page, List<Pair<Article, Boolean>> pairs){
+
+            log.info("page: {}", page.getContent());
+            log.info("pairs: {}", pairs);
+
+            return new Paging(
+                    pairs.stream()
+                            .map(pair -> Basic.of(pair.getFirst(), pair.getSecond()))
+                            .toList(),
+                    page.getTotalPages(),
+                    page.getPageable().getPageNumber()
+            );
+        }
+    }
 
     public record Basic(
             Long articleId,
@@ -19,9 +43,10 @@ public class ArticleInfo {
             ArticleStatus status,
             LocalDateTime createdAt,
             ShareType shareType,
-            String imageUrl
+            String imageUrl,
+            Boolean liked
     ) {
-        public static Basic from(Article article){
+        public static Basic of(Article article, Boolean liked){
             return new Basic(
                     article.getId(),
                     article.getTitle(),
@@ -29,7 +54,8 @@ public class ArticleInfo {
                     article.getStatus(),
                     article.getCreatedAt(),
                     article.getShareType(),
-                    article.getFirstImageUrl()
+                    article.getFirstImageUrl(),
+                    liked
             );
         }
     }

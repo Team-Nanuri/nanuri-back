@@ -3,11 +3,13 @@ package team.hackerping.nanuri.article.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import team.hackerping.nanuri.user.domain.User;
 
 import java.time.LocalDateTime;
 
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "ARTICLE_LIKE")
@@ -28,4 +30,14 @@ public class Like {
     private Article article;
 
     private LocalDateTime createdAt;
+
+    public Like(User user, Article article, LocalDateTime createdAt) {
+        this.user = user;
+        this.article = article;
+        this.createdAt = createdAt;
+    }
+
+    public static Like of(User user, Article article) {
+        return new Like(user, article, LocalDateTime.now());
+    }
 }

@@ -3,12 +3,14 @@ package team.hackerping.nanuri.article.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.SoftDelete;
 import team.hackerping.nanuri.user.domain.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@SoftDelete(columnName = "DELETED")
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE) @Builder(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
