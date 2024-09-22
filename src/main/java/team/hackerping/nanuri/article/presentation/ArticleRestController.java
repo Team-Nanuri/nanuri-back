@@ -71,8 +71,8 @@ public class ArticleRestController implements ArticleController{
     }
 
     @Override
-    @PutMapping
-    public ResponseEntity<ArticleResponse.Detail> modifyArticle(@RequestBody Upsert request) {
+    @PutMapping("/{id}")
+    public ResponseEntity<ArticleResponse.Detail> modifyArticle(@PathVariable Long id, @RequestBody Upsert request) {
         //Todo
         return null;
     }
