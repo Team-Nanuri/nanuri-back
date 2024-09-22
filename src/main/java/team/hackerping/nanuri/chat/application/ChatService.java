@@ -11,6 +11,7 @@ import team.hackerping.nanuri.chat.application.dto.ChatRoomInfo;
 import team.hackerping.nanuri.chat.domain.ChatRoom;
 import team.hackerping.nanuri.chat.persistence.ChatRepository;
 import team.hackerping.nanuri.global.exception.NanuriException;
+import team.hackerping.nanuri.global.exception.code.ChatError;
 import team.hackerping.nanuri.global.exception.code.GeneralError;
 import team.hackerping.nanuri.user.persistence.UserRepository;
 
@@ -46,9 +47,21 @@ public class ChatService {
         room.sendMessage(command.senderId(), command.message());
     }
 
+    @Transactional(readOnly = true)
     public ChatRoomInfo.Paging getRooms(Long userId, Pageable pageable) {
         var chatRooms = chatRepository.findAllChatRoomById(userId, pageable);
 
         return ChatRoomInfo.Paging.from(chatRooms);
+    }
+
+    @Transactional(readOnly = true)
+    public ChatRoomInfo.Detail getRoom(Long roomId, Long userId) {
+        var chatRoom = chatRepository.findById(roomId)
+                .orElseThrow(() -> new NanuriException(GeneralError.NOT_FOUND, "채팅방"));
+
+        if (chatRoom.isNotParticipant(userId)) {
+            throw new NanuriException(ChatError.NOT_PARTICIPANT);
+        }
+        return ChatRoomInfo.Detail.from(chatRoom);
     }
 }
