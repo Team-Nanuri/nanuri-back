@@ -53,7 +53,12 @@ public class ChatRestController implements ChatController {
     public ResponseEntity<Paging> getRooms(@PageableDefault Pageable pageable,
                                            Authentication authentication
     ) {
-        return null;
+        var userId = Long.valueOf(authentication.getPrincipal().toString());
+        var rooms = chatService.getRooms(userId, pageable);
+
+        var response = Paging.from(rooms);
+        return ResponseEntity.ok()
+                .body(response);
     }
 
     @Override
