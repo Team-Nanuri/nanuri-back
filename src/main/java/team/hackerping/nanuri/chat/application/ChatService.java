@@ -1,11 +1,13 @@
 package team.hackerping.nanuri.chat.application;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team.hackerping.nanuri.article.persistence.ArticleRepository;
-import team.hackerping.nanuri.chat.application.dto.ChatMessageCommand;
-import team.hackerping.nanuri.chat.application.dto.ChatRoomCommand;
+import team.hackerping.nanuri.chat.application.command.ChatMessageCommand;
+import team.hackerping.nanuri.chat.application.command.ChatRoomCommand;
+import team.hackerping.nanuri.chat.application.dto.ChatRoomInfo;
 import team.hackerping.nanuri.chat.domain.ChatRoom;
 import team.hackerping.nanuri.chat.persistence.ChatRepository;
 import team.hackerping.nanuri.global.exception.NanuriException;
@@ -42,5 +44,11 @@ public class ChatService {
                 .orElseThrow(() -> new NanuriException(GeneralError.NOT_FOUND, "채팅방"));
 
         room.sendMessage(command.senderId(), command.message());
+    }
+
+    public ChatRoomInfo.Paging getRooms(Long userId, Pageable pageable) {
+        var chatRooms = chatRepository.findAllChatRoomById(userId, pageable);
+
+        return ChatRoomInfo.Paging.from(chatRooms);
     }
 }
