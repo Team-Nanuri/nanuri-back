@@ -1,5 +1,8 @@
 package team.hackerping.nanuri.article.application.info;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.util.Pair;
@@ -9,10 +12,6 @@ import team.hackerping.nanuri.article.domain.ItemCategory;
 import team.hackerping.nanuri.article.domain.ShareType;
 import team.hackerping.nanuri.user.application.UserInfo;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-
 @Slf4j
 public class ArticleInfo {
 
@@ -21,7 +20,7 @@ public class ArticleInfo {
             int totalPage,
             int currentPage
     ) {
-        public static Paging of(Page<Article> page, List<Pair<Article, Boolean>> pairs){
+        public static Paging of(Page<Article> page, List<Pair<Article, Boolean>> pairs) {
 
             log.info("page: {}", page.getContent());
             log.info("pairs: {}", pairs);
@@ -46,7 +45,7 @@ public class ArticleInfo {
             String imageUrl,
             Boolean liked
     ) {
-        public static Basic of(Article article, Boolean liked){
+        public static Basic of(Article article, Boolean liked) {
             return new Basic(
                     article.getId(),
                     article.getTitle(),
@@ -74,7 +73,7 @@ public class ArticleInfo {
             List<String> imageUrls,
             Boolean liked
     ) {
-        public static Detail of(Article article, Boolean liked){
+        public static Detail of(Article article, Boolean liked) {
             return new Detail(
                     article.getId(),
                     article.getTitle(),
@@ -88,6 +87,24 @@ public class ArticleInfo {
                     UserInfo.from(article.getWriter()),
                     article.getImages(),
                     liked
+            );
+        }
+    }
+
+    public record Simple(
+            Long articleId,
+            String title,
+            String imageUrl,
+            ArticleStatus status,
+            UserInfo writer
+    ) {
+        public static Simple from(Article article) {
+            return new Simple(
+                    article.getId(),
+                    article.getTitle(),
+                    article.getFirstImageUrl(),
+                    article.getStatus(),
+                    UserInfo.from(article.getWriter())
             );
         }
     }
