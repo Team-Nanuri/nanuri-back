@@ -38,7 +38,8 @@ public class ChatResponse {
     public record RoomDetail(
             Long roomId,
             ArticleResponse.Simple article,
-            List<ChatMessage> messages
+            List<ChatMessage> messages,
+            UserResponse.MaskedUserDto otherUser
     ) {
         public static RoomDetail from(ChatRoomInfo.Detail detail) {
             return new RoomDetail(
@@ -46,7 +47,8 @@ public class ChatResponse {
                     ArticleResponse.Simple.from(detail.article()),
                     detail.messages().stream()
                             .map(ChatMessage::from)
-                            .toList()
+                            .toList(),
+                    UserResponse.MaskedUserDto.from(detail.otherUser())
             );
         }
     }
