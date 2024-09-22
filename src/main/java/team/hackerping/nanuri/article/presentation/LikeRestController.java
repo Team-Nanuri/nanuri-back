@@ -2,10 +2,7 @@ package team.hackerping.nanuri.article.presentation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import team.hackerping.nanuri.article.application.LikeService;
 
 @RequiredArgsConstructor
@@ -17,19 +14,19 @@ public class LikeRestController implements LikeController {
 
     @Override
     @PostMapping
-    public void likeArticle(Long articleId) {
+    public void likeArticle(@PathVariable Long id) {
 
         Long userId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
-        likeService.likeArticle(userId, articleId);
+        likeService.likeArticle(userId, id);
     }
 
     @Override
     @DeleteMapping
-    public void unlikeArticle(Long articleId) {
+    public void unlikeArticle(@PathVariable Long id) {
 
         Long userId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
-        likeService.unlikeArticle(userId, articleId);
+        likeService.unlikeArticle(userId, id);
     }
 }
