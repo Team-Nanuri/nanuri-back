@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import team.hackerping.nanuri.chat.application.ChatService;
 import team.hackerping.nanuri.chat.presentation.dto.ChatRequest;
 import team.hackerping.nanuri.chat.presentation.dto.ChatRequest.Create;
+import team.hackerping.nanuri.chat.presentation.dto.ChatResponse;
 import team.hackerping.nanuri.chat.presentation.dto.ChatResponse.Paging;
 import team.hackerping.nanuri.chat.presentation.dto.ChatResponse.RoomDetail;
 
@@ -63,10 +64,15 @@ public class ChatRestController implements ChatController {
 
     @Override
     @GetMapping("/{roomId}")
-    public ResponseEntity<RoomDetail> getMessage(@PathVariable Long roomId,
-                                                 Authentication authentication
+    public ResponseEntity<ChatResponse.RoomDetail> getMessage(@PathVariable Long roomId,
+                                                              Authentication authentication
 
     ) {
-        return null;
+        var userId = Long.valueOf(authentication.getPrincipal().toString());
+        var room = chatService.getRoom(roomId, userId);
+
+        var response = RoomDetail.from(room);
+        return ResponseEntity.ok()
+                .body(response);
     }
 }
