@@ -40,6 +40,15 @@ public class ChatResponse {
             ArticleResponse.Simple article,
             List<ChatMessage> messages
     ) {
+        public static RoomDetail from(ChatRoomInfo.Detail detail) {
+            return new RoomDetail(
+                    detail.id(),
+                    ArticleResponse.Simple.from(detail.article()),
+                    detail.messages().stream()
+                            .map(ChatMessage::from)
+                            .toList()
+            );
+        }
     }
 
     public record ChatMessage(

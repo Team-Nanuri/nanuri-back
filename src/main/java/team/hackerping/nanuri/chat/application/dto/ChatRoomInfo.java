@@ -32,4 +32,22 @@ public class ChatRoomInfo {
             );
         }
     }
+
+    public record Detail(
+            Long id,
+            ArticleInfo.Simple article,
+            List<ChatMessageInfo.Detail> messages,
+            UserInfo otherUser
+    ) {
+        public static Detail from(ChatRoom chatRoom) {
+            return new Detail(
+                    chatRoom.getId(),
+                    ArticleInfo.Simple.from(chatRoom.getArticle()),
+                    chatRoom.getMessages().stream()
+                            .map(ChatMessageInfo.Detail::from)
+                            .toList(),
+                    UserInfo.from(chatRoom.getRecipient())
+            );
+        }
+    }
 }
