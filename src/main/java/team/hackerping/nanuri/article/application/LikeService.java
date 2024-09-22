@@ -53,6 +53,9 @@ public class LikeService {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new NanuriException(GeneralError.NOT_FOUND, "게시글"));
 
+        if (user.equals(article.getWriter()))
+            throw new NanuriException(ArticleError.CANNOT_LIKE_MY_ARTICLE);
+
         if (likeRepository.existsByUserAndArticle(user, article))
             throw new NanuriException(ArticleError.ALREADY_LIKED);
 
