@@ -87,8 +87,7 @@ public class ArticleRestController implements ArticleController{
             @PathVariable Long id,
             @RequestBody Status request) {
 
-        // TODO: user id를 access token에서 추출한 정보로 수정
-        Long userId = 1L;
+        Long userId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
         ChangeStatusCommand command = new ChangeStatusCommand(userId, id, request.status());
         ArticleInfo.Detail info = articleFacade.changeArticleStatus(command);
