@@ -47,17 +47,27 @@ E타입 경북대에 다니는 다양한 배경의 학우들을 위한 서비스
 ![image](https://github.com/user-attachments/assets/2c209d4f-7f7b-4c84-8989-4dc3395624b6)
 
 ### 구현 방식
+
 프론트엔드
+
 React
+
 Typescript
+
 React-Query (서버와의 비동기 통신 및 캐싱, 사버 상태 관리)
+
 Axios (HTTP 클라이언트)
+
 TailwindCSS (유틸리티 퍼스트 CSS 프레임워크)
+
 Shadcn (UI 컴포넌트 라이브러리)
 
 백엔드
+
 Java & SpringBoot
+
 AWS에 배포하여 EC2와 S3
+
 OpenAI API와 PapagoAPI 활용
 
 ## 향후 개선 혹은 발전 방안
