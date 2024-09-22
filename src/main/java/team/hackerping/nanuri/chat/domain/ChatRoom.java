@@ -67,4 +67,12 @@ public class ChatRoom {
     public ChatMessage getLastMessage() {
         return messages.get(messages.size() - 1);
     }
+
+    public boolean isParticipant(Long userId) {
+        return recipient.getId().equals(userId) || article.getWriter().getId().equals(userId);
+    }
+
+    public boolean isNotParticipant(Long userId) {
+        return !isParticipant(userId);
+    }
 }
