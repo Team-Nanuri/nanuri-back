@@ -9,6 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.CorsFilter;
 import team.hackerping.nanuri.security.filter.JwtAuthorizationFilter;
 import team.hackerping.nanuri.security.handler.AccessHandler;
 import team.hackerping.nanuri.security.handler.AuthenticationHandler;
@@ -22,7 +24,8 @@ public class SecurityConfig {
             JwtAuthorizationFilter jwtAuthorizationFilter,
             SecurityProperties securityProperties,
             AccessHandler accessHandler,
-            AuthenticationHandler authenticationHandler
+            AuthenticationHandler authenticationHandler,
+            CorsFilter corsFilter
     ) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         httpSecurity.httpBasic(AbstractHttpConfigurer::disable);
@@ -34,7 +37,7 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(authorizeRequests -> authorizeRequests
                 .anyRequest().permitAll()
         );
-        
+
         httpSecurity.exceptionHandling(exceptionHandling -> exceptionHandling
                 .authenticationEntryPoint(accessHandler)
                 .accessDeniedHandler(accessHandler)
@@ -46,6 +49,7 @@ public class SecurityConfig {
                 .failureHandler(authenticationHandler)
         );
 
+        httpSecurity.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);
         httpSecurity.addFilterBefore(jwtAuthorizationFilter, AuthorizationFilter.class);
         return httpSecurity.build();
     }
