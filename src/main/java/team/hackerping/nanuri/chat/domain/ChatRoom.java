@@ -63,4 +63,8 @@ public class ChatRoom {
     private long getReceiverId(Long senderId) {
         return senderId.equals(recipient.getId()) ? article.getWriter().getId() : recipient.getId();
     }
+
+    public ChatMessage getLastMessage() {
+        return messages.get(messages.size() - 1);
+    }
 }
